@@ -104,6 +104,10 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
+        if git diff --quiet && git diff --cached --quiet; then
+          echo "No changes to commit. This is normal when version hasn't changed."
+          exit 0
+        fi
         git add Beautiful_Soup_4.xml
         git commit -m "doc: update Beautiful_Soup_4.xml for release ${{ steps.get_version.outputs.version }}"
         git push
